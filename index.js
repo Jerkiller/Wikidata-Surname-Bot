@@ -9,7 +9,7 @@ app.get("/", async (req, res) => {
       //"","",...
     ]);
     */
-  for (let i = 0; i < 40; i++) {
+  for (let i = 30; i < 40; i++) {
     response = await testNames(i);
     console.log(`DONE ${i}\n`, response);
   }

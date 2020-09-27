@@ -6,5 +6,7 @@ module.exports = {
     editConfig: {
         instance: "https://www.wikidata.org",
         credentials: require('./wiki-credentials'),
+        bot: false,
+        tags: [ 'Wikidata-Surname-Bot','WikibaseJS-edit' ],
       },
   };

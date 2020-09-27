@@ -1,0 +1,125 @@
+{
+    "pageid": 48253143,
+    "ns": 0,
+    "title": "Q47205853",
+    "lastrevid": 970681350,
+    "modified": "2019-06-28T20:20:49Z",
+    "type": "item",
+    "id": "Q47205853",
+    "labels": {
+        "en": {
+            "language": "en",
+            "value": "Chunwen Sun"
+        }
+    },
+    "descriptions": {
+        "en": {
+            "language": "en",
+            "value": "researcher"
+        }
+    },
+    "aliases": {
+        "en": [
+            {
+                "language": "en",
+                "value": "ResearcherID: A-9860-2008"
+            }
+        ]
+    },
+    "claims": {
+        "P496": [
+            {
+                "mainsnak": {
+                    "snaktype": "value",
+                    "property": "P496",
+                    "hash": "170957dc06699c8aa59cc059143567826593b84d",
+                    "datavalue": {
+                        "value": "0000-0002-3610-9396",
+                        "type": "string"
+                    },
+                    "datatype": "external-id"
+                },
+                "type": "statement",
+                "id": "Q47205853$20D75646-A33D-4B2F-9942-A669612E004D",
+                "rank": "normal"
+            }
+        ],
+        "P31": [
+            {
+                "mainsnak": {
+                    "snaktype": "value",
+                    "property": "P31",
+                    "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+                    "datavalue": {
+                        "value": {
+                            "entity-type": "item",
+                            "numeric-id": 5,
+                            "id": "Q5"
+                        },
+                        "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                },
+                "type": "statement",
+                "id": "Q47205853$18624C94-FBBE-4C3D-BBB4-94CFC47DF20E",
+                "rank": "normal"
+            }
+        ],
+        "P1053": [
+            {
+                "mainsnak": {
+                    "snaktype": "value",
+                    "property": "P1053",
+                    "hash": "819740e119353fe99270c8d2818f09ce9fc79959",
+                    "datavalue": {
+                        "value": "A-9860-2008",
+                        "type": "string"
+                    },
+                    "datatype": "external-id"
+                },
+                "type": "statement",
+                "id": "Q47205853$92BCA867-51BC-4B25-BF77-A60F2249CE06",
+                "rank": "normal"
+            }
+        ],
+        "P106": [
+            {
+                "mainsnak": {
+                    "snaktype": "value",
+                    "property": "P106",
+                    "hash": "b2146e4e2394f55779529e985bc7f2a657879ef2",
+                    "datavalue": {
+                        "value": {
+                            "entity-type": "item",
+                            "numeric-id": 1650915,
+                            "id": "Q1650915"
+                        },
+                        "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                },
+                "type": "statement",
+                "id": "Q47205853$17FBCBE1-5410-44EA-A033-E1B905F02523",
+                "rank": "normal"
+            }
+        ],
+        "P3829": [
+            {
+                "mainsnak": {
+                    "snaktype": "value",
+                    "property": "P3829",
+                    "hash": "1b86b49dc438ce78a7cdfb9f482385d4d43eacc4",
+                    "datavalue": {
+                        "value": "1407637",
+                        "type": "string"
+                    },
+                    "datatype": "external-id"
+                },
+                "type": "statement",
+                "id": "Q47205853$01318e84-48a6-4c55-b450-7cd246f7aa0b",
+                "rank": "normal"
+            }
+        ]
+    },
+    "sitelinks": {}
+}

@@ -25,7 +25,7 @@ module.exports = class WikidataNames {
       personIndex < personsToBeFixed.length;
       personIndex++
     ) {
-      console.log(personsToBeFixed[personIndex]);
+      console.log(personsToBeFixed[personIndex].personLabel.value);
       const person = {
         personId: this.urlToEntityId(personsToBeFixed[personIndex].person.value),
         personUrl: personsToBeFixed[personIndex].person.value,
@@ -117,7 +117,7 @@ LIMIT 400`;
       });
       const response = await this.request({ method: "GET", url });
       const jsonResponse = await response.json();
-      console.log(jsonResponse);
+      //console.log(jsonResponse);
       const surnameEntities = jsonResponse.search
         .filter((x) => x.label == surname)
         .filter((x) => x.description && x.description.indexOf("family name") >= 0);
@@ -163,7 +163,7 @@ LIMIT 400`;
     const { method, url, body } = req;
     const fetch = require("node-fetch");
     const botConfig = require('./constants/bot-config');
-    console.log({ method, url, body });
+    //console.log({ method, url, body });
     return await fetch(url, {
       method,
       body,
@@ -187,6 +187,7 @@ LIMIT 400`;
         property: this.p.hasSurname,
         value: person.surnameId,
       });
+      console.log("** Added surname :-) **")
       return res.success;
     } catch (error) {
       console.error(error);

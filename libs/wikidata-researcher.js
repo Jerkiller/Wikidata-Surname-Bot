@@ -6,9 +6,9 @@ module.exports = class WikidataResearchers {
   constructor(nameToProcess) {
     const wikiConfig = require("../constants/wiki-config");
     this.nameToProcess = nameToProcess;
-    this.logFile = "../logs/surname-opportunities.log";
-    this.logFile2 = "../logs/surname-big-opportunities.log";
-    this.logFile3 = "../logs/surname-big-opportunities-links.log";
+    this.logFile = "./logs/surname-opportunities.log";
+    this.logFile2 = "./logs/surname-big-opportunities.log";
+    this.logFile3 = "./logs/surname-big-opportunities-links.log";
     this.wdk = require("wikibase-sdk")(wikiConfig.baseConfig);
     this.wbEdit = require("wikibase-edit")(wikiConfig.editConfig);
     this.p = require("../constants/properties");

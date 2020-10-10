@@ -4,7 +4,7 @@ module.exports = class WikidataSurnamesRecycler {
     this.wh = new WikiHelper();
     this.surname = surname;
     
-    this.logFile = '../logs/entities.log';
+    this.logFile = './logs/entities.log';
     this.p = require('../constants/properties');
     this.q = require('../constants/qualificators');
   }

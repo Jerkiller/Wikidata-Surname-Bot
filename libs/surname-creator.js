@@ -4,7 +4,7 @@ module.exports = class Surname {
     constructor(surname) {
       const wikiConfig = require("../constants/wiki-config");
       this.surname = surname;
-      this.logFile = '../logs/surname-creator.log';
+      this.logFile = './logs/surname-creator.log';
       this.wdk = require("wikibase-sdk")(wikiConfig.baseConfig);
       this.wbEdit = require("wikibase-edit")(wikiConfig.editConfig);
       this.p = require('../constants/properties');

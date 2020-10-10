@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "surname fixer": "node surname-fixer.js",
-    "surname creation": "node surname-creation.js",
-    "surname recycle": "node surname-recycle.js",
-    "researcher fixer": "node researcher-fixer.js"
+    "surname-fixer": "node surname-fixer.js",
+    "surname-creation": "node surname-creation.js",
+    "surname-recycle": "node surname-recycle.js",
+    "researcher-fixer": "node researcher-fixer.js"
   },
   "author": "lfavorid",
   "license": "ISC",

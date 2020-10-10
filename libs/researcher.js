@@ -1,14 +1,14 @@
 module.exports = class Researcher {
   constructor(researcher) {
-    const wikiConfig = require("./constants/wiki-config");
+    const wikiConfig = require("../constants/wiki-config");
     this.id = researcher.id;
     this.label = researcher.label;
     this.description = researcher.description;
-    this.logFile = "logs/researcher.log";
+    this.logFile = "../logs/researcher.log";
     this.wdk = require("wikibase-sdk")(wikiConfig.baseConfig);
     this.wbEdit = require("wikibase-edit")(wikiConfig.editConfig);
-    this.p = require("./constants/properties");
-    this.q = require("./constants/qualificators");
+    this.p = require("../constants/properties");
+    this.q = require("../constants/qualificators");
     this.entity = null;
   }
 

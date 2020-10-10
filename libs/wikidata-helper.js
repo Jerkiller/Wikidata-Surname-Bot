@@ -7,13 +7,13 @@ module.exports = class WikidataHelper {
       sparqlEndpoint: "https://query.wikidata.org/sparql",
     });
 
-    const credentials = require('./constants/wiki-credentials');
+    const credentials = require('../constants/wiki-credentials');
     const generalConfig = {
       instance: "https://www.wikidata.org",
       credentials
     };
-    this.p = require('./constants/properties');
-    this.q = require('./constants/qualificators');
+    this.p = require('../constants/properties');
+    this.q = require('../constants/qualificators');
     this.wbEdit = require("wikibase-edit")(generalConfig);
   }
 
@@ -102,7 +102,7 @@ module.exports = class WikidataHelper {
   async request(req) {
     const { method, url, body } = req;
     const fetch = require("node-fetch");
-    const botConfig = require('./constants/bot-config');
+    const botConfig = require('../constants/bot-config');
     //console.log({ method, url, body });
     return await fetch(url, {
       method,

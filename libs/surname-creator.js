@@ -2,13 +2,13 @@
 module.exports = class Surname {
   
     constructor(surname) {
-      const wikiConfig = require("./constants/wiki-config");
+      const wikiConfig = require("../constants/wiki-config");
       this.surname = surname;
-      this.logFile = 'logs/surname-creator.log';
+      this.logFile = '../logs/surname-creator.log';
       this.wdk = require("wikibase-sdk")(wikiConfig.baseConfig);
       this.wbEdit = require("wikibase-edit")(wikiConfig.editConfig);
-      this.p = require('./constants/properties');
-      this.q = require("./constants/qualificators");
+      this.p = require('../constants/properties');
+      this.q = require("../constants/qualificators");
     }
   
     getEntity() {
@@ -132,7 +132,7 @@ module.exports = class Surname {
     async request(req) {
       const { method, url, body } = req;
       const fetch = require("node-fetch");
-      const botConfig = require('./constants/bot-config');
+      const botConfig = require('../constants/bot-config');
       console.log({ method, url, body });
       return await fetch(url, {
         method,

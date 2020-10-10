@@ -149,7 +149,7 @@ LIMIT 200`;
   async request(req) {
     const { method, url, body } = req;
     const fetch = require("node-fetch");
-    const botConfig = require('./constants/bot-config');
+    const botConfig = require('../constants/bot-config');
     //console.log({ method, url, body });
     return await fetch(url, {
       method,

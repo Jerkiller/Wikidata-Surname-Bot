@@ -3,12 +3,12 @@ module.exports = class WikidataNames {
     const WikiHelper = require("./wikidata-helper");
     this.wh = new WikiHelper();
     this.nameToProcess = nameToProcess;
-    this.logFile = 'logs/surname-opportunities.log';
-    this.logFile2 = 'logs/surname-big-opportunities.log';
-    this.logFile3 = 'logs/surname-big-opportunities-links.log';
+    this.logFile = '../logs/surname-opportunities.log';
+    this.logFile2 = '../logs/surname-big-opportunities.log';
+    this.logFile3 = '../logs/surname-big-opportunities-links.log';
     
-    this.p = require('./constants/properties');
-    this.q = require('./constants/qualificators');
+    this.p = require('../constants/properties');
+    this.q = require('../constants/qualificators');
   }
 
   async run() {

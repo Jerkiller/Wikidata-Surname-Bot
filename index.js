@@ -4,12 +4,11 @@ const app = express();
 app.get("/", async (req, res) => {
   res.send("Batch Started");
   let response;
-  /*
+  
     response = await surnameCreation([
-      //"","",...
-    ]);
-    */
-  for (let i = 31; i < 40; i++) {
+     ]);
+   testSurnameRecycler();
+  for (let i = 0; i < 100; i++) {
     response = await testNames(i);
     console.log(`DONE ${i}\n`, response);
   }
@@ -29,6 +28,21 @@ async function surnameCreation(surnames) {
 //   const wdr = new WikidataResearchers();
 //   await wdr.run();
 // }
+
+async function testSurnameRecycler() {
+  const surnames = [
+  ];
+  const WikidataSurnamesRecycler = require('./wikidata-surnames-recycler');
+  const Surname = require("./surname-creator");
+  for (const surname of surnames) {
+    const wsr = new WikidataSurnamesRecycler(surname);
+    const existing = await wsr.checkIfSurnameExists();
+    if (!existing) {
+      const s = new Surname(surname);
+      await s.createEntity();
+    } 
+  }
+}
 
 async function testNames(index) {
   const names = require('./examples/name-list');

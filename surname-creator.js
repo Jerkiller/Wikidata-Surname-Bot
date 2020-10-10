@@ -1,12 +1,4 @@
-/*
-// Esamples
-const examples = [
-    "Valdesi",
-    "Birigozzi",
-    "D’Ascanio",
-    "Chiappino"
-];
-*/
+
 module.exports = class Surname {
   
     constructor(surname) {
@@ -59,7 +51,31 @@ module.exports = class Surname {
       entity.claims[this.p.hasCologne] = colognePhonetic(this.surname);
       entity.claims[this.p.hasCaverphone] = caverphone(this.surname);
 
+      if(this.surname.indexOf('-') >= 0)
+        entity.claims[this.p.isInstanceOf] = [this.q.surname,this.q.surnameComposed];
+
+      if(this.isSurnameAffixed(this.surname))
+        entity.claims[this.p.isInstanceOf] = [this.q.surname,this.q.surnameAffixed];
+
       return entity;
+    }
+
+    isSurnameAffixed (surname) {
+      if(surname.indexOf('Di ') == 0) return true;
+      if(surname.indexOf('De ') == 0) return true;
+      if(surname.indexOf('Della ') == 0) return true;
+      if(surname.indexOf('Delle ') == 0) return true;
+      if(surname.indexOf('Degli ') == 0) return true;
+      if(surname.indexOf('Dei ') == 0) return true;
+      if(surname.indexOf('Del ') == 0) return true;
+      if(surname.indexOf("D'") == 0) return true;
+      if(surname.indexOf('Dal ') == 0) return true;
+      if(surname.indexOf('Dalla ') == 0) return true;
+      if(surname.indexOf('Dalle ') == 0) return true;
+      if(surname.indexOf('Dai ') == 0) return true;
+      if(surname.indexOf('Da ') == 0) return true;
+      if(surname.indexOf("Van '") == 0) return true;
+      return false;
     }
 
     logToFile(data) {

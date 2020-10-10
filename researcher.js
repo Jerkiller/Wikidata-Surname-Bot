@@ -16,8 +16,6 @@ module.exports = class Researcher {
   async isValid() {
     const entity = await this.getEntity();
     if (entity == null) return false;
-    //TODO fix this :-(
-    if (this.id == "Q7315186") return false;
 
     // First criteria: researcher has orcid, scopus, publons or reseacherId
     const claimIdList = Object.keys(entity.claims);

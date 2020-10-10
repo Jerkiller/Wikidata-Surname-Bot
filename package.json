@@ -11,7 +11,6 @@
   "dependencies": {
     "caverphone-phonetics": "^1.0.0",
     "cologne-phonetic": "^1.0.1",
-    "express": "^4.17.1",
     "soundex-code": "^1.0.5",
     "wikibase-edit": "^4.7.3",
     "wikibase-sdk": "^7.7.1",

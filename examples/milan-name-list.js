@@ -88,7 +88,7 @@ module.exports = [
   { id: "wd:Q18176338", name: "Fausto" },
   { id: "wd:Q18177180", name: "Armando" },
   { id: "wd:Q18177262", name: "Gilberto" },
-  { id: "wd:Q18177306", name: "Andrea" },
+  { id: "wd:Q18177306", name: "Andrea" }, /////////////
   { id: "wd:Q18179872", name: "Emanuele" },
   { id: "wd:Q18180808", name: "Alfonso" },
   { id: "wd:Q18180968", name: "Remo" },

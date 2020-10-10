@@ -1,19 +1,16 @@
-const express = require("express");
-const app = express();
 
-app.get("/", async (req, res) => {
-  res.send("Batch Started");
+main();
+
+async function main(){
   let response;
-  
-    response = await surnameCreation([
-     ]);
-   testSurnameRecycler();
-  for (let i = 0; i < 200; i++) {
+  response = await surnameCreation([]);
+  testSurnameRecycler();
+  for (let i = 89; i < 200; i++) {
     response = await testNames(i);
     console.log(`DONE ${i}\n`, response);
   }
   console.log("Batch Finished");
-});
+}
 
 async function surnameCreation(surnames) {
   for (let surname of surnames) {
@@ -30,9 +27,8 @@ async function surnameCreation(surnames) {
 // }
 
 async function testSurnameRecycler() {
-  const surnames = [
-  ];
-  const WikidataSurnamesRecycler = require('./wikidata-surnames-recycler');
+  const surnames = [];
+  const WikidataSurnamesRecycler = require("./wikidata-surnames-recycler");
   const Surname = require("./surname-creator");
   for (const surname of surnames) {
     const wsr = new WikidataSurnamesRecycler(surname);
@@ -40,18 +36,14 @@ async function testSurnameRecycler() {
     if (!existing) {
       const s = new Surname(surname);
       await s.createEntity();
-    } 
+    }
   }
 }
 
 async function testNames(index) {
-  const names = require('./examples/milan-name-list');
+  const names = require("./examples/milan-name-list");
   const WikidataNames = require("./wikidata-names");
   const wdn = new WikidataNames(names[index].id);
   const wikidataNames = await wdn.run();
   return wikidataNames;
 }
-
-app.listen(8000, () => {
-  console.log("Example app listening on port 8000!");
-});

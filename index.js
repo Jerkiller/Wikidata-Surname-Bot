@@ -8,7 +8,7 @@ app.get("/", async (req, res) => {
     response = await surnameCreation([
      ]);
    testSurnameRecycler();
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 200; i++) {
     response = await testNames(i);
     console.log(`DONE ${i}\n`, response);
   }
@@ -45,7 +45,7 @@ async function testSurnameRecycler() {
 }
 
 async function testNames(index) {
-  const names = require('./examples/name-list');
+  const names = require('./examples/milan-name-list');
   const WikidataNames = require("./wikidata-names");
   const wdn = new WikidataNames(names[index].id);
   const wikidataNames = await wdn.run();

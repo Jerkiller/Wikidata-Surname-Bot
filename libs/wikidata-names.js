@@ -49,7 +49,7 @@ module.exports = class WikidataNames {
       const result = await this.addSurnameToPerson(person);
       person.result = result;
       persons.push(person);
-      await this.wh.sleep(500);
+      await this.wh.sleep(900);
     }
     return persons;
   }
@@ -64,6 +64,7 @@ SELECT ?person ?personLabel ?surname ?surnameLabel ?name ?nameLabel WHERE {
 }
 LIMIT 1000`;
     const persons = await this.wh.search(sparql);
+    if(persons == null) return [];
     return persons.filter((x) => x.surname == null);
   }
 

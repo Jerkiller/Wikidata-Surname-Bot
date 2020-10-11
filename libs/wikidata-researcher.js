@@ -3,23 +3,87 @@
 const Researcher = require("./researcher");
 
 module.exports = class WikidataResearchers {
-  constructor(nameToProcess) {
-    const wikiConfig = require("../constants/wiki-config");
-    this.nameToProcess = nameToProcess;
-    this.logFile = "./logs/surname-opportunities.log";
-    this.logFile2 = "./logs/surname-big-opportunities.log";
-    this.logFile3 = "./logs/surname-big-opportunities-links.log";
-    this.wdk = require("wikibase-sdk")(wikiConfig.baseConfig);
-    this.wbEdit = require("wikibase-edit")(wikiConfig.editConfig);
+  constructor() {
+    
+    const WH = require("../libs/wikidata-helper");
+    this.wh = new WH();
+
+    this.logFile = "./logs/researcher-found.log";
     this.p = require("../constants/properties");
     this.q = require("../constants/qualificators");
   }
 
-  async run() {
+async run() {
+  const elements = [
+'Q50271955',
+'Q42326413',
+'Q90248973',
+'Q42314415',
+'Q83830711',
+'Q57902702',
+'Q56479831',
+'Q54196873',
+'Q2758100',
+'Q30128636',
+'Q4726279',
+'Q40206892',
+
+  ];
+  for (const element of elements) {
+    console.log(this.wh.entityIdToUrl(element));
+    const researcher = new Researcher({id: element});
+    // be sure it is a researcher, then process it
+    if (await researcher.isValid()) {
+      console.log("researcher ORCID");
+      await researcher.fix();
+    }
+    else {
+      console.log("NOTVALID");
+    }
+    console.log("---------------------------");
+  }
+}
+
+async findResearchers() {
+  while(true) {
+    const article = await this.getArticle();
+    const authorIds = this.getArticleAuthorIds(article);
+    //console.log(article.labels.en, authorIds.join(', '));
+    authorIds.map(a => {
+      this.logResearcherToFile(a);
+    });
+    this.wh.sleep(1000);
+  }
+}
+
+async getArticle() {
+  while(true) {
+    const randomElement = await this.wh.getRandomElement();
+    if(this.isArticle(randomElement))
+      return randomElement;
+    this.wh.sleep(500);
+  }
+}
+
+isArticle(entity) {
+  const instances = entity.claims[this.p.isInstanceOf];
+  if(instances == null)return false; // No instances... don't know what it is
+  const ids = instances.map(i => i.mainsnak.datavalue.value.id);
+  return ids.indexOf(this.q.scienceArticle) >= 0;
+}
+
+getArticleAuthorIds(article) {
+  if(!this.isArticle(article))return [];
+  const authors = article.claims[this.p.author];
+  if(authors == null)return [];
+  return authors.map(i => i.mainsnak.datavalue.value.id);
+}
+
+  async oldRun() {
     const pageNum = 50; // 0-50
     const Researcher = require("./researcher");
     for (let i = 0; i < 50; i++) {
-      const elements = await this.search(pageNum, i * pageNum);
+      const elements = await this.searchReasearchers(pageNum, i * pageNum);
       console.log(elements);
       if(elements == null) continue;
       for (const element of elements) {
@@ -27,22 +91,22 @@ module.exports = class WikidataResearchers {
         // be sure it is a researcher, then process it
         if (await researcher.isValid()) {
           researcher.logToFile("researcher ORCID");
-          researcher.logToFile(this.entityIdToUrl(researcher.id));
+          researcher.logToFile(this.wh.entityIdToUrl(researcher.id));
           researcher.logToFile("---------------------------");
           await researcher.fix();
         }
         else {
           researcher.logToFile("NOTVALID");
-          researcher.logToFile(this.entityIdToUrl(researcher.id));
+          researcher.logToFile(this.wh.entityIdToUrl(researcher.id));
           researcher.logToFile("---------------------------");
         }
       }
-      await this.sleep(1000);
+      await this.wh.sleep(1000);
     }
     console.log("completed");
   }
 
-  async search(limit, offset) {
+  async searchReasearchers(limit, offset) {
     try {
       const url = await this.wdk.searchEntities({
         search: "researcher",
@@ -51,7 +115,7 @@ module.exports = class WikidataResearchers {
         continue: offset,
       });
       console.log("search url ",url);
-      const response = await this.request({ method: "GET", url });
+      const response = await this.wh.request({ method: "GET", url });
       const jsonResponse = await response.json();
       return jsonResponse.search
         .filter(
@@ -69,32 +133,7 @@ module.exports = class WikidataResearchers {
     }
   }
 
-  entityIdToUrl(entityId) {
-    return `http://www.wikidata.org/entity/${entityId}`;
-  }
-  urlToEntityId(url) {
-    return url.replace("http://www.wikidata.org/entity/", "");
-  }
-
-  async request(req) {
-    const { method, url, body } = req;
-    const fetch = require("node-fetch");
-    const botConfig = require('./constants/bot-config');
-    //console.log({ method, url, body });
-    return await fetch(url, {
-      method,
-      body,
-      headers: {
-        'User-Agent': botConfig.userAgent
-      }
-    });
-  }
-
-  sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
-  logToFile(data) {
+  logResearcherToFile(data) {
     const fs = require("fs");
     fs.appendFileSync(this.logFile, `${data}\n`);
   }

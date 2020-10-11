@@ -3,7 +3,7 @@ main();
 
 async function main(){
   let response;
-  for (let i = 90; i < 200; i++) {
+  for (let i = 120; i < 200; i++) {
     response = await testNames(i);
     console.log(`DONE ${i}\n`, response);
   }

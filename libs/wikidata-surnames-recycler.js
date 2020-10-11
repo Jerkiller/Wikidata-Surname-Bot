@@ -30,8 +30,7 @@ module.exports = class WikidataSurnamesRecycler {
   }
 
   async isSurname(element){
-    const entities = await this.wh.getElementById(element.id);
-    const entity = entities.entities[element.id];
+    const entity = await this.wh.getElementById(element.id);
     //console.log("entity",entity);
 
     const whatIsIt = entity.claims[this.p.isInstanceOf];

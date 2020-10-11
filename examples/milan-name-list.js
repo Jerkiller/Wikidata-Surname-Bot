@@ -88,7 +88,7 @@ module.exports = [
   { id: "wd:Q18176338", name: "Fausto" },
   { id: "wd:Q18177180", name: "Armando" },
   { id: "wd:Q18177262", name: "Gilberto" },
-  { id: "wd:Q18177306", name: "Andrea" }, /////////////
+  { id: "wd:Q18177306", name: "Andrea" },
   { id: "wd:Q18179872", name: "Emanuele" },
   { id: "wd:Q18180808", name: "Alfonso" },
   { id: "wd:Q18180968", name: "Remo" },
@@ -159,7 +159,7 @@ module.exports = [
   { id: "wd:Q2834804", name: "Alfio" },
   { id: "wd:Q28798094", name: "Amilcare" },
   { id: "wd:Q28890824", name: "Elpidio" },
-  { id: "wd:Q3362622", name: "Mario" },
+  { id: "wd:Q3362622", name: "Mario" }, ////////////
   { id: "wd:Q340285", name: "Achille" },
   { id: "wd:Q3438276", name: "Rodolfo" },
   { id: "wd:Q348946", name: "Renato" },

@@ -11,5 +11,6 @@ module.exports = {
     scopusId: 'P1153',
     publonsId: 'P3829',
     researcherId: 'P1053',
-    occupation: 'P106'
+    occupation: 'P106',
+    author: 'P50'
   };

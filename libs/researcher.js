@@ -1,14 +1,14 @@
 module.exports = class Researcher {
   constructor(researcher) {
-    const wikiConfig = require("../constants/wiki-config");
     this.id = researcher.id;
     this.label = researcher.label;
     this.description = researcher.description;
+
     this.logFile = "./logs/researcher.log";
-    this.wdk = require("wikibase-sdk")(wikiConfig.baseConfig);
-    this.wbEdit = require("wikibase-edit")(wikiConfig.editConfig);
     this.p = require("../constants/properties");
     this.q = require("../constants/qualificators");
+    const WH = require("../libs/wikidata-helper");
+    this.wh = new WH();
     this.entity = null;
   }
 
@@ -72,49 +72,8 @@ module.exports = class Researcher {
   }
 
   async getEntity() {
-    if (this.entity == null) this.entity = await this.getEntityById(this.id);
+    if (this.entity == null) this.entity = await this.wh.getElementById(this.id);
     return this.entity;
   }
 
-  async getEntityById(entityId) {
-    try {
-      const url = this.wdk.getEntities({
-        ids: [entityId],
-        languages: ["en", "it", "fr", "de"],
-      });
-      const req = await this.request({ method: "GET", url: url });
-      //console.log(req);
-      if (req.ok) {
-        const response = await req.json();
-        return response.entities[entityId];
-      } else {
-        console.error(req);
-        return null;
-      }
-    } catch (error) {
-      console.error(error);
-      return null;
-    }
-  }
-
-  entityIdToUrl(entityId) {
-    return `http://www.wikidata.org/entity/${entityId}`;
-  }
-  urlToEntityId(url) {
-    return url.replace("http://www.wikidata.org/entity/", "");
-  }
-
-  async request(req) {
-    const { method, url, body } = req;
-    const fetch = require("node-fetch");
-    console.log("url", url);
-    return await fetch(url, {
-      method,
-      body,
-    });
-  }
-
-  sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
 };

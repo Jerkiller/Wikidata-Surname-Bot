@@ -46,8 +46,8 @@ module.exports = class WikidataHelper {
       });
       const req = await this.request({ method: "GET", url });
       if(req.ok) {
-        const jsonResponse = await req.json();
-        return jsonResponse;
+        const entities = await req.json();
+        return entities.entities[elementId]
       }
       else {
           console.error(req);
@@ -60,10 +60,14 @@ module.exports = class WikidataHelper {
   }
 
   entityIdToUrl(entityId) {
-    return `http://www.wikidata.org/entity/${entityId}`;
+    return `https://www.wikidata.org/entity/${entityId}`;
   }
   urlToEntityId(url) {
-    return url.replace("http://www.wikidata.org/entity/", "");
+    return url
+      .replace("http://", "")
+      .replace("https://", "")
+      .replace("www.wikidata.org/wiki/", "")
+      .replace("www.wikidata.org/entity/", "");
   }
 
   // Search all persons with name nameToProcess
@@ -131,5 +135,19 @@ module.exports = class WikidataHelper {
       return false;
     }
   }
+
+  async getRandomElementId(){
+    const randomUrl = 'https://www.wikidata.org/wiki/Special:Random';
+    const response = await this.request({url:randomUrl, method:'GET'});
+    if(response.ok)
+      return this.urlToEntityId(response.url);
+  }
+
+  async getRandomElement(){
+    const id = await this.getRandomElementId();
+    this.sleep(500);
+    return await this.getElementById(id);
+  }
+
 
 };

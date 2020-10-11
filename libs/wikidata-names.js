@@ -49,7 +49,7 @@ module.exports = class WikidataNames {
       const result = await this.addSurnameToPerson(person);
       person.result = result;
       persons.push(person);
-      await this.wh.sleep(1000);
+      await this.wh.sleep(500);
     }
     return persons;
   }

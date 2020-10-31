@@ -12,16 +12,13 @@ module.exports = class WikidataSurnamesRecycler {
 
 
   async checkIfSurnameExists(){
-    const entities = await this.wh.getSimilarElements(this.surname);
+    let capitalizedSurname = (this.surname).charAt(0).toUpperCase() + (this.surname).slice(1);
+    const entities = await this.wh.getSimilarElements(capitalizedSurname);
     console.log('entities', entities)
     for (const element of entities.search) {
       try {
         let isSurname = await this.isSurname(element);
         if(isSurname)return true;
-        
-        let capitalizedElement = element.charAt(0).toUpperCase() + element.slice(1)
-        let isSurnameCapitalized = await this.isSurname(capitalizedElement);
-        if(isSurnameCapitalized) return true;
       } catch (error) {
         // in doubt... it is a suname
         this.logToFileLost(this.surname);
@@ -68,6 +65,29 @@ module.exports = class WikidataSurnamesRecycler {
       if(val == this.q.mountain) return false;
       if(val == this.q.street) return false;
       if(val == this.q.album) return false;
+      if(val == this.chefLieu) return false;
+      if(val == this.borderTown) return false;
+      if(val == this.constellation) return false;
+      if(val == this.sculpture) return false;
+      if(val == this.archaeologicalSite) return false;
+      if(val == this.region) return false;
+      if(val == this.literaryWork) return false;
+      if(val == this.song) return false;
+      if(val == this.gene) return false;
+      if(val == this.country) return false;
+      if(val == this.villageIndia) return false;
+      if(val == this.film) return false;
+      if(val == this.compound) return false;
+      if(val == this.language) return false;
+      if(val == this.modernLanguage) return false;
+      if(val == this.municipalityBrazil) return false;
+      if(val == this.medication) return false;
+      if(val == this.watercourse) return false;
+      if(val == this.hill) return false;
+      if(val == this.mineralSpecies) return false;
+      if(val == this.villageUkraine) return false;
+      if(val == this.ortsteil) return false;
+
       this.logToFile(val);
     }
     //const claimIdList = Object.keys(entity.claims);

@@ -5,6 +5,7 @@ module.exports = class WikidataSurnamesRecycler {
     this.surname = surname;
     
     this.logFile = './logs/entities.log';
+    this.logFile2 = './logs/opportunities-lost.log'
     this.p = require('../constants/properties');
     this.q = require('../constants/qualificators');
   }
@@ -20,9 +21,10 @@ module.exports = class WikidataSurnamesRecycler {
         
         let capitalizedElement = element.charAt(0).toUpperCase() + element.slice(1)
         let isSurnameCapitalized = await this.isSurname(capitalizedElement);
-        if(isSurnameCapitalized)return true;
+        if(isSurnameCapitalized) return true;
       } catch (error) {
         // in doubt... it is a suname
+        this.logToFileLost(this.surname);
         return true;
       }
     }
@@ -187,4 +189,8 @@ LIMIT 200`;
     fs.appendFileSync(this.logFile, `${data}\n`);
   }
 
+  logToFileLost(data) {
+    const fs = require('fs');
+    fs.appendFileSync(this.logFile2, `${data}\n`);
+  }
 };

@@ -3,12 +3,12 @@ module.exports = class WikidataNames {
     const WikiHelper = require("./wikidata-helper");
     this.wh = new WikiHelper();
     this.nameToProcess = nameToProcess;
-    this.logFile = './logs/surname-opportunities.log';
-    this.logFile2 = './logs/surname-big-opportunities.log';
-    this.logFile3 = './logs/surname-big-opportunities-links.log';
-    
-    this.p = require('../constants/properties');
-    this.q = require('../constants/qualificators');
+    this.logFile = "./logs/surname-opportunities.log";
+    this.logFile2 = "./logs/surname-big-opportunities.log";
+    this.logFile3 = "./logs/surname-big-opportunities-links.log";
+
+    this.p = require("../constants/properties");
+    this.q = require("../constants/qualificators");
   }
 
   async run() {
@@ -27,7 +27,9 @@ module.exports = class WikidataNames {
     ) {
       console.log(personsToBeFixed[personIndex].personLabel.value);
       const person = {
-        personId: this.wh.urlToEntityId(personsToBeFixed[personIndex].person.value),
+        personId: this.wh.urlToEntityId(
+          personsToBeFixed[personIndex].person.value
+        ),
         personUrl: personsToBeFixed[personIndex].person.value,
         fullName: personsToBeFixed[personIndex].personLabel.value,
         firstName: personsToBeFixed[personIndex].nameLabel.value,
@@ -40,8 +42,7 @@ module.exports = class WikidataNames {
         const surnameId = await this.getSurnameEntity(surname);
         person.surnameId = surnameId;
         person.surnameUrl = this.wh.entityIdToUrl(surnameId);
-      }
-      else {
+      } else {
         this.logToFile(person.fullName);
       }
 
@@ -62,17 +63,20 @@ SELECT ?person ?personLabel ?surname ?surnameLabel ?name ?nameLabel WHERE {
   OPTIONAL { ?person wdt:${this.p.hasSurname} ?surname. }
   OPTIONAL { ?person wdt:${this.p.hasName} ?name. }
 }
-LIMIT 1000`;
+LIMIT 2000`;
     const persons = await this.wh.search(sparql);
-    if(persons == null) return [];
+    if (persons == null) return [];
     return persons.filter((x) => x.surname == null);
   }
 
   async getSurnameEntity(surname) {
     const entity = await this.wh.searchEntity(surname);
+    if(entity == null) return null;
     const surnameEntities = entity
       .filter((x) => x.label == surname)
-      .filter((x) => x.description && x.description.indexOf("family name") >= 0);
+      .filter(
+        (x) => x.description && x.description.indexOf("family name") >= 0
+      );
 
     if (surnameEntities != null && surnameEntities.length > 0)
       return surnameEntities[0].id;
@@ -82,52 +86,55 @@ LIMIT 1000`;
   /// Luca Fancelli -> Fancelli
   /// Luca Melchiore Tempi -> null (cannot establish real surname)
   getPersonSurname(person) {
-    person.fullName = person.fullName.replace('’',"'");
+    person.fullName = person.fullName.replace("’", "'");
     const [name, surname, secondSurname, thirdSurname] = person.fullName.split(
       " "
     );
-    const preSurnames = [
-      "de",
-      "De",
-      "Dal",
-      "dal",
-      "di",
-      "Di",
-      "Della",
-      "della",
-      "Dai",
-      "dai",
-    ];
+    let preSurnames = [ "de", "di", "del", "della", "degli", "dei", "dal", "dalla", "dai", "dagli", "dalle", "da" ];
     // Capitan Ventosa -> boh
     if (name != person.firstName) return null;
     // Luca Dal Sacco -> Dal Sacco
-    if (preSurnames.indexOf(surname) >= 0 && secondSurname != null && thirdSurname == null)
-      return `${surname} ${secondSurname}`;
+    if (
+      surname != null &&
+      preSurnames.indexOf(surname.toLowerCase()) >= 0 &&
+      secondSurname != null &&
+      thirdSurname == null
+    )
+      return surname.toLowerCase() === "di"
+        ? `${surname} ${secondSurname}`
+        : // Dal, Della, De. Not dal della de
+          `${
+            surname.charAt(0).toUpperCase() + surname.slice(1)
+          } ${secondSurname}`;
     // Luca Shenko -> Shenko
     if (secondSurname == null && thirdSurname == null) return surname;
     // Luca Marini Marconi Mainardi / Luca Mandela King
     return null;
   }
-  
+
   async addSurnameToPerson(person) {
     if (person.surname == null) return false;
     if (person.surnameId == null) return false;
     const added = await this.wh.addClaimToEntity(
-      person.personId, this.p.hasSurname, person.surnameId
-      );
-    if(added)console.log("** Added surname :-) **")
+      person.personId,
+      this.p.hasSurname,
+      person.surnameId
+    );
+    if (added) console.log("** Added surname :-) **");
     return added;
   }
 
-
   logToFile(data) {
-    const fs = require('fs');
+    const fs = require("fs");
     fs.appendFileSync(this.logFile, `${data}\n`);
   }
 
   logToFileOpportunity(data) {
-    const fs = require('fs');
+    const fs = require("fs");
     fs.appendFileSync(this.logFile2, `"${data}",\n`);
-    fs.appendFileSync(this.logFile3, `https://www.wikidata.org/w/index.php?search=&search=${data}&title=Special%3ASearch&go=Vai&ns0=1&ns120=1\n`);
+    fs.appendFileSync(
+      this.logFile3,
+      `https://www.wikidata.org/w/index.php?search=&search=${data}&title=Special%3ASearch&go=Vai&ns0=1&ns120=1\n`
+    );
   }
 };

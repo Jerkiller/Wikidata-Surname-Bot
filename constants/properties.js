@@ -2,6 +2,7 @@ module.exports = {
     hasSurname: "P734",
     hasName: "P735",
     isInstanceOf: "P31",
+    subclassOf: "P279",
     hasAlphabet: "P282",
     hasSoundex: 'P3878',
     hasCologne: 'P3879',

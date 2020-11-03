@@ -8,10 +8,12 @@ module.exports = class WikidataSurnamesRecycler {
     this.logFile2 = './logs/opportunities-lost.log'
     this.p = require('../constants/properties');
     this.q = require('../constants/qualificators');
+    this.nonSurnameEntities = require('../constants/non-surnames');
   }
 
 
   async checkIfSurnameExists(){
+    if(this.isRomanNumber())return false;
     let capitalizedSurname = (this.surname).charAt(0).toUpperCase() + (this.surname).slice(1);
     const entities = await this.wh.getSimilarElements(capitalizedSurname);
     console.log('entities', entities)
@@ -28,66 +30,30 @@ module.exports = class WikidataSurnamesRecycler {
     return false;
   }
 
+  isRomanNumber(){
+    const romanNumberRegex = /^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$|^\d+$/;
+    return this.surname.match(romanNumberRegex) > 0;
+  }
+
   async isSurname(element){
     const entity = await this.wh.getElementById(element.id);
     //console.log("entity",entity);
+    const superclasses = entity.claims[this.p.subclassOf];
+    const isAbstractElem = superclasses && Array.isArray(superclasses) && superclasses.length > 0;
+    if (isAbstractElem) return false;
 
     const whatIsIt = entity.claims[this.p.isInstanceOf];
+    // if has no istanceOf it coud be a surname
+    if (!Array.isArray(whatIsIt))
+      return true;
     for (const instance of whatIsIt) {
       const val = instance.mainsnak.datavalue.value.id;
-      if(val == this.q.surname) return true;
+      if(val == this.q.surname)
+        return true;
 
-      if(val == this.q.human) return false;
-      if(val == this.q.disambiguate) return false;
-      if(val == this.q.company) return false;
-      if(val == this.q.family) return false;
-      if(val == this.q.nobleFamily) return false;
-      if(val == this.q.settlement) return false;
-      if(val == this.q.school) return false;
-      if(val == this.q.taxon) return false;
-      if(val == this.q.village) return false;
-      if(val == this.q.city) return false;
-      if(val == this.q.bigCity) return false;
-      if(val == this.q.locality) return false;
-      if(val == this.q.italyComuneSub) return false;
-      if(val == this.q.italyComune) return false;
-      if(val == this.q.frenchComune) return false;
-      if(val == this.q.spainComune) return false;
-      if(val == this.q.highSchool) return false;
-      if(val == this.q.scienceArticle) return false;
-      if(val == this.q.researcher) return false;
-      if(val == this.q.maleName) return false;
-      if(val == this.q.bio) return false;
-      if(val == this.q.character) return false;
-      if(val == this.q.lord) return false;
-      if(val == this.q.asteroid) return false;
-      if(val == this.q.river) return false;
-      if(val == this.q.mountain) return false;
-      if(val == this.q.street) return false;
-      if(val == this.q.album) return false;
-      if(val == this.chefLieu) return false;
-      if(val == this.borderTown) return false;
-      if(val == this.constellation) return false;
-      if(val == this.sculpture) return false;
-      if(val == this.archaeologicalSite) return false;
-      if(val == this.region) return false;
-      if(val == this.literaryWork) return false;
-      if(val == this.song) return false;
-      if(val == this.gene) return false;
-      if(val == this.country) return false;
-      if(val == this.villageIndia) return false;
-      if(val == this.film) return false;
-      if(val == this.compound) return false;
-      if(val == this.language) return false;
-      if(val == this.modernLanguage) return false;
-      if(val == this.municipalityBrazil) return false;
-      if(val == this.medication) return false;
-      if(val == this.watercourse) return false;
-      if(val == this.hill) return false;
-      if(val == this.mineralSpecies) return false;
-      if(val == this.villageUkraine) return false;
-      if(val == this.ortsteil) return false;
-
+      if(this.nonSurnameEntities.indexOf(val) >= 0)
+      return false;
+      
       this.logToFile(val);
     }
     //const claimIdList = Object.keys(entity.claims);

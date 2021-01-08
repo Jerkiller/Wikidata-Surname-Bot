@@ -5,6 +5,12 @@ module.exports = {
       },
     editConfig: {
         instance: "https://www.wikidata.org",
+        /*
+          credentials: {
+            username: '',
+            password: ''
+          }
+        */
         credentials: require('./wiki-credentials'),
         bot: false,
         tags: [ /*'Wikidata-Surname-Bot',*/'WikibaseJS-edit' ],

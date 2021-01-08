@@ -104,4 +104,4 @@ dist
 .tern-port
 
 # don't spread our credential to all github!
-config/wiki-credentials.js
+constants/wiki-credentials.js

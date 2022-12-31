@@ -82,6 +82,8 @@ module.exports = class Surname {
       entity.claims[this.p.hasSoundex] = soundex(this.surname);
       entity.claims[this.p.hasCologne] = colognePhonetic(this.surname);
       entity.claims[this.p.hasCaverphone] = caverphone(this.surname);
+      
+      entity.claims[this.p.geneanetId] = this.surname.toUpperCase();
 
       if(this.surname.indexOf('-') >= 0)
         entity.claims[this.p.isInstanceOf] = [this.q.surname,this.q.surnameComposed];

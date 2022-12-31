@@ -13,5 +13,6 @@ module.exports = {
     publonsId: 'P3829',
     researcherId: 'P1053',
     occupation: 'P106',
-    author: 'P50'
+    author: 'P50',
+    geneanetId: 'P9644',
   };

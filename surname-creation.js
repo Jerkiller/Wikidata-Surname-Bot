@@ -1,6 +1,7 @@
 
 surnameCreation([
   // Put here any surname that you want to create
+  '',
 ]);
 
 async function surnameCreation(surnames) {

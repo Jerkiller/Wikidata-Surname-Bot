@@ -1,20 +1,17 @@
-module.exports = class WikidataHelper {
+import fetch from 'node-fetch';
+import wbedit from "wikibase-edit";
+import WBK from 'wikibase-sdk';
+
+import { p, q, wikiConfig, botConfig } from '../constants/index.mjs';
+
+
+export class WikidataHelper {
 
   constructor() {
-    const WBK = require("wikibase-sdk");
-    this.wdk = WBK({
-      instance: "https://www.wikidata.org",
-      sparqlEndpoint: "https://query.wikidata.org/sparql",
-    });
-
-    const credentials = require('../constants/wiki-credentials');
-    const generalConfig = {
-      instance: "https://www.wikidata.org",
-      credentials
-    };
-    this.p = require('../constants/properties');
-    this.q = require('../constants/qualificators');
-    this.wbEdit = require("wikibase-edit")(generalConfig);
+    this.wdk = WBK(wikiConfig.baseConfig);
+    this.wbEdit = wbedit(wikiConfig.editConfig);
+    this.p = p;
+    this.q = q;
   }
 
 
@@ -105,8 +102,6 @@ module.exports = class WikidataHelper {
 
   async request(req) {
     const { method, url, body } = req;
-    const fetch = require("node-fetch");
-    const botConfig = require('../constants/bot-config');
     //console.log({ method, url, body });
     return await fetch(url, {
       method,

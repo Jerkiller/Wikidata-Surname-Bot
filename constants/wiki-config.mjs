@@ -1,4 +1,6 @@
-module.exports = {
+import { credentials } from "./wiki-credentials.mjs";
+
+export const wikiConfig = {
     baseConfig: {
         instance: "https://www.wikidata.org",
         sparqlEndpoint: "https://query.wikidata.org/sparql",
@@ -11,7 +13,7 @@ module.exports = {
             password: ''
           }
         */
-        credentials: require('./wiki-credentials'),
+        credentials,
         bot: false,
         tags: [ /*'Wikidata-Surname-Bot',*/'WikibaseJS-edit' ],
       },

@@ -1,4 +1,4 @@
-module.exports = [
+export const femaleNameList = [
   { name: "Adele", id: "wd:Q354370" },
   { name: "Adelina", id: "wd:Q1820345" },
   { name: "Alba", id: "wd:Q576194" },

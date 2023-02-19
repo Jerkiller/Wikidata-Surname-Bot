@@ -1,4 +1,4 @@
-module.exports = [
+export const genericNameList = [
   {id: 'wd:Q1001625',name:'Fiorella'},
   {id: 'wd:Q1001630',name:'Fioretta'},
   {id: 'wd:Q1003165',name:'Fortunato'},

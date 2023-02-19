@@ -1,14 +1,17 @@
-module.exports = class WikidataNames {
+import * as fs from 'fs';
+import { WikidataHelper } from './wikidata-helper.mjs';
+import { p, q } from '../constants/index.mjs';
+
+export class WikidataNames {
   constructor(nameToProcess) {
-    const WikiHelper = require("./wikidata-helper");
-    this.wh = new WikiHelper();
+    this.wh = new WikidataHelper();
     this.nameToProcess = nameToProcess;
     this.logFile = "./logs/surname-opportunities.log";
     this.logFile2 = "./logs/surname-big-opportunities.log";
     this.logFile3 = "./logs/surname-big-opportunities-links.log";
 
-    this.p = require("../constants/properties");
-    this.q = require("../constants/qualificators");
+    this.p = p;
+    this.q = q;
   }
 
   async run() {
@@ -125,12 +128,10 @@ LIMIT 2000`;
   }
 
   logToFile(data) {
-    const fs = require("fs");
     fs.appendFileSync(this.logFile, `${data}\n`);
   }
 
   logToFileOpportunity(data) {
-    const fs = require("fs");
     fs.appendFileSync(this.logFile2, `"${data}",\n`);
     fs.appendFileSync(
       this.logFile3,

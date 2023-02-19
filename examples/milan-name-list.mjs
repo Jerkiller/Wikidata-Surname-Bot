@@ -1,4 +1,4 @@
-module.exports = [
+export const milanNameList = [
   { id: "wd:Q1043555", name: "Carmelo" },
   { id: "wd:Q1069139", name: "Romeo" },
   { id: "wd:Q10880598", name: "Matteo" },

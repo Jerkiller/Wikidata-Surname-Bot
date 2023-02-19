@@ -1,14 +1,19 @@
-module.exports = class Researcher {
+import * as fs from 'fs';
+// import fetch from 'node-fetch';
+// import wbedit from "wikibase-edit";
+// import WBK from 'wikibase-sdk';
+
+import { WikidataHelper } from './wikidata-helper.mjs';
+// import { p, q, wikiConfig, botConfig, labels } from '../constants/index.mjs';
+
+export class Researcher {
   constructor(researcher) {
     this.id = researcher.id;
     this.label = researcher.label;
     this.description = researcher.description;
 
     this.logFile = "./logs/researcher.log";
-    this.p = require("../constants/properties");
-    this.q = require("../constants/qualificators");
-    const WH = require("../libs/wikidata-helper");
-    this.wh = new WH();
+    this.wh = new WikidataHelper();
     this.entity = null;
   }
 
@@ -67,7 +72,6 @@ module.exports = class Researcher {
   }
 
   logToFile(data) {
-    const fs = require("fs");
     fs.appendFileSync(this.logFile, `${data}\n`);
   }
 

@@ -1,4 +1,4 @@
-module.exports = {
+export const p = {
     hasSurname: "P734",
     hasName: "P735",
     isInstanceOf: "P31",

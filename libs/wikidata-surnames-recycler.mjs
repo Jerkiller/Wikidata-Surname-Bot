@@ -1,14 +1,17 @@
-module.exports = class WikidataSurnamesRecycler {
+import * as fs from 'fs';
+import { WikidataHelper } from './wikidata-helper.mjs';
+import { p, q, nonSurnames } from '../constants/index.mjs';
+
+export class WikidataSurnamesRecycler {
   constructor(surname) {
-    const WikiHelper = require("./wikidata-helper");
-    this.wh = new WikiHelper();
+    this.wh = new WikidataHelper();
     this.surname = surname;
     
     this.logFile = './logs/entities.log';
     this.logFile2 = './logs/opportunities-lost.log'
-    this.p = require('../constants/properties');
-    this.q = require('../constants/qualificators');
-    this.nonSurnameEntities = require('../constants/non-surnames');
+    this.p = p;
+    this.q = q;
+    this.nonSurnameEntities = nonSurnames;
   }
 
 
@@ -171,12 +174,10 @@ LIMIT 200`;
 
 
   logToFile(data) {
-    const fs = require('fs');
     fs.appendFileSync(this.logFile, `${data}\n`);
   }
 
   logToFileLost(data) {
-    const fs = require('fs');
     fs.appendFileSync(this.logFile2, `${data}\n`);
   }
 };

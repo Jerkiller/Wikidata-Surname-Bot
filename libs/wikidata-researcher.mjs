@@ -1,16 +1,20 @@
 //Q96099108
+import * as fs from 'fs';
+// import fetch from 'node-fetch';
+// import wbedit from "wikibase-edit";
+// import WBK from 'wikibase-sdk';
 
-const Researcher = require("./researcher");
+import { WikidataHelper } from './wikidata-helper.mjs';
+import { p, q } from '../constants/index.mjs';
+import { Researcher } from './researcher.mjs';
 
-module.exports = class WikidataResearchers {
+export class WikidataResearchers {
   constructor() {
-    
-    const WH = require("../libs/wikidata-helper");
-    this.wh = new WH();
+    this.wh = new WikidataHelper();
 
     this.logFile = "./logs/researcher-found.log";
-    this.p = require("../constants/properties");
-    this.q = require("../constants/qualificators");
+    this.p = p;
+    this.q = q;
   }
 
 async run() {
@@ -81,7 +85,6 @@ getArticleAuthorIds(article) {
 
   async oldRun() {
     const pageNum = 50; // 0-50
-    const Researcher = require("./researcher");
     for (let i = 0; i < 50; i++) {
       const elements = await this.searchReasearchers(pageNum, i * pageNum);
       console.log(elements);
@@ -134,7 +137,6 @@ getArticleAuthorIds(article) {
   }
 
   logResearcherToFile(data) {
-    const fs = require("fs");
     fs.appendFileSync(this.logFile, `${data}\n`);
   }
 };

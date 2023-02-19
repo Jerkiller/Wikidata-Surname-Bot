@@ -1,73 +1,34 @@
+import { soundex } from 'soundex-code';
+import * as fs from 'fs';
+import fetch from 'node-fetch';
+import caverphone from 'caverphone-phonetics';
+import wbedit from "wikibase-edit";
+import WBK from 'wikibase-sdk';
 
-module.exports = class Surname {
+import { colognePhonetic } from 'cologne-phonetic';
+import { p, q, wikiConfig, botConfig, labels } from '../constants/index.mjs';
+
+
+export class Surname {
   
     constructor(surname) {
-      const wikiConfig = require("../constants/wiki-config");
       this.surname = surname;
       this.logFile = './logs/surname-creator.log';
-      this.wdk = require("wikibase-sdk")(wikiConfig.baseConfig);
-      this.wbEdit = require("wikibase-edit")(wikiConfig.editConfig);
-      this.p = require('../constants/properties');
-      this.q = require("../constants/qualificators");
+      this.wdk = WBK(wikiConfig.baseConfig);
+      this.wbEdit = wbedit(wikiConfig.editConfig);
+      this.p = p;
+      this.q = q;
     }
   
     getEntity() {
-      const soundex = require('soundex-code')
-      const caverphone = require( 'caverphone-phonetics' )
-      const colognePhonetic = require( 'cologne-phonetic' ).colognePhonetic;
-      const descriptions = {
-        ast: 'apellíu',
-        bar: 'Schreibnam',
-        br: 'anv-tiegezh',
-        ca: 'cognom',
-        cs: 'příjmení',
-        da: 'efternavn',
-        de: 'Familienname',
-        'de-at': 'Familienname',
-        'de-ch': 'Familienname',
-        en: 'family name',
-        'en-ca': 'family name',
-        'en-gb': 'surname',
-        eo: 'familia nomo',
-        es: 'apellido',
-        et: 'perekonnanimi',
-        eu: 'abizen',
-        fi: 'sukunimi',
-        fit: 'sukunimi',
-        fo: 'ættarnavn',
-        fr: 'nom de famille',
-        ga: 'sloinne',
-        gl: 'apelido',
-        hr: 'prezime',
-        is: 'eftirnafn',
-        it: 'cognome',
-        la: 'nomen gentilicium',
-        lt: 'pavardė',
-        lv: 'uzvārds',
-        mi: 'ingoa whānau',
-        nl: 'achternaam',
-        oc: 'nom d\'ostal',
-        pl: 'nazwisko',
-        pms: 'cognòm',
-        pt: 'sobrenome',
-        'pt-br': 'nome de família',
-        ro: 'nume de familie',
-        sco: 'faimily name',
-        sk: 'priezvisko',
-        sl: 'priimek',
-        sq: 'mbiemër',
-        sv: 'efternamn',
-        tr: 'soyadı',
-        wa: 'no d\'famile',
-        zu: 'isibongo',
-      };
-      const labels = {};
+      const descriptions = labels.surname;
+      const newLabels = {};
       Object.keys(descriptions).map(k => {
-        labels[k] = this.surname;
+        newLabels[k] = this.surname;
       });
       const entity = {
         type: 'item',
-        labels: labels,
+        labels: newLabels,
         descriptions,
         aliases: {},
         claims: {},
@@ -113,7 +74,6 @@ module.exports = class Surname {
     }
 
     logToFile(data) {
-        const fs = require('fs');
         //fs.writeFile(this.logFile, data);
         fs.appendFileSync(this.logFile, `${data}\n`);
     }
@@ -165,8 +125,6 @@ module.exports = class Surname {
   
     async request(req) {
       const { method, url, body } = req;
-      const fetch = require("node-fetch");
-      const botConfig = require('../constants/bot-config');
       console.log({ method, url, body });
       return await fetch(url, {
         method,

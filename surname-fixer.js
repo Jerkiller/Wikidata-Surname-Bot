@@ -1,3 +1,5 @@
+import { names } from './examples/generic-name-list.mjs';
+import { WikidataNames } from './libs/wikidata-names.mjs';
 
 main();
 
@@ -11,8 +13,6 @@ async function main(){
 }
 
 async function testNames(index) {
-  const names = require("./examples/generic-name-list");
-  const WikidataNames = require("./libs/wikidata-names");
   const wdn = new WikidataNames(names[index].id);
   const wikidataNames = await wdn.run();
   return wikidataNames;

@@ -1,5 +1,5 @@
-const q = require('./qualificators');
-module.exports = [
+import { q } from "./qualificators.mjs";
+export const nonSurnames = [
   q.human,
   q.disambiguate,
   q.company,

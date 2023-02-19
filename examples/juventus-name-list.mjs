@@ -1,4 +1,4 @@
-module.exports = [
+export const juventusNameList = [
   { id: "wd:Q1069139", name: "Romeo" },
   { id: "wd:Q10880598", name: "Matteo" },
   { id: "wd:Q1093061", name: "Ciro" },

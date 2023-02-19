@@ -1,4 +1,4 @@
-module.exports = {
+export const q = {
     surname: 'Q101352',
     surnameComposed: 'Q29042997',
     surnameAffixed: 'Q66480858',

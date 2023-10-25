@@ -16,7 +16,7 @@
     "caverphone-phonetics": "^1.0.0",
     "cologne-phonetic": "^1.0.1",
     "soundex-code": "^2.0.1",
-    "wikibase-edit": "^5.3.2",
+    "wikibase-edit": "^6.0.3",
     "wikibase-sdk": "^9.0.4",
     "wikidata-sdk": "^7.14.4"
   }

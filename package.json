@@ -17,7 +17,7 @@
     "cologne-phonetic": "^1.0.1",
     "soundex-code": "^2.0.1",
     "wikibase-edit": "^6.0.3",
-    "wikibase-sdk": "^9.0.4",
+    "wikibase-sdk": "^9.2.4",
     "wikidata-sdk": "^7.14.4"
   }
 }

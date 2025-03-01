@@ -14,10 +14,11 @@
   "license": "ISC",
   "dependencies": {
     "caverphone-phonetics": "^1.0.0",
-    "cologne-phonetic": "^1.0.1",
+    "cologne-phonetic": "^1.1.0",
+    "node-fetch": "^3.3.2",
     "soundex-code": "^2.0.1",
-    "wikibase-edit": "^6.0.3",
-    "wikibase-sdk": "^9.2.4",
-    "wikidata-sdk": "^7.14.4"
+    "wikibase-edit": "^7.2.3",
+    "wikibase-sdk": "^10.2.1",
+    "wikidata-sdk": "^8.1.1"
   }
 }

@@ -23,12 +23,12 @@ export class Surname {
     getEntity() {
       const descriptions = labels.surname;
       const newLabels = {};
-      Object.keys(descriptions).map(k => {
-        newLabels[k] = this.surname;
-      });
+      // Object.keys(descriptions).map(k => {
+      //   newLabels[k] = this.surname;
+      // });
       const entity = {
         type: 'item',
-        labels: newLabels,
+        labels: {mul: this.surname},
         descriptions,
         aliases: {},
         claims: {},
